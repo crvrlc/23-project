@@ -1,6 +1,8 @@
 // screen for the list of donation drives
 
 import 'package:flutter/material.dart';
+import 'package:my_app/organization/create_donation_drive.dart';
+import 'package:my_app/organization/donation_drive_info.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 // structure for donation drive
@@ -44,24 +46,6 @@ final List<DonationDrive> donationDrives = [
   ),
 ];
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Elbi Donation System',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: DonationDriveHomePage(),
-    );
-  }
-}
-
 class DonationDriveHomePage extends StatefulWidget {
   @override
   _DonationDriveHomePageState createState() => _DonationDriveHomePageState();
@@ -103,56 +87,61 @@ class _DonationDriveHomePageState extends State<DonationDriveHomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFF87CEEB),
-              ),
-              child: Text(
-                'Elbi\nDonation\nSystem',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            ListTile(
-              title: const Text('Home'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Donation Drives'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Profile'),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: [
+      //       DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Color(0xFF87CEEB),
+      //         ),
+      //         child: Text(
+      //           'Elbi\nDonation\nSystem',
+      //           style: TextStyle(
+      //               color: Colors.white,
+      //               fontSize: 30.0,
+      //               fontWeight: FontWeight.bold),
+      //         ),
+      //       ),
+      //       ListTile(
+      //         title: const Text('Home'),
+      //         onTap: () {},
+      //       ),
+      //       ListTile(
+      //         title: const Text('Donation Drives'),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //       ListTile(
+      //         title: const Text('Profile'),
+      //         onTap: () {},
+      //       ),
+      //     ],
+      //   ),
+      // ),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Donation Drives",
           style:
               TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2F4852)),
         ),
         centerTitle: true,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: Column(
         children: [
           // search bar
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(children: [
                 TextField(
                   controller: _searchController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Search Drives',
                     suffixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
@@ -163,68 +152,74 @@ class _DonationDriveHomePageState extends State<DonationDriveHomePage> {
           // donation drives
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: ListView.builder(
                 itemCount: filteredDonationDrives.length,
                 itemBuilder: (context, index) {
                   // card for donation drives
                   return Card(
-                    margin: EdgeInsets.all(10),
-                    color: Color(0xFF50C0ED),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        // photo in the card
-                        Container(
-                          height: 150,
-                          width: double.infinity,
-                          child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(10)),
-                            child: Image.asset(
-                              filteredDonationDrives[index].imageUrl,
-                              fit: BoxFit.cover,
+                    margin: const EdgeInsets.all(10),
+                    color: const Color(0xFF50C0ED),
+                    child: GestureDetector(
+                      onDoubleTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return DonationDriveScreen();
+                        }));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          // photo in the card
+                          Container(
+                            height: 150,
+                            width: double.infinity,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(10)),
+                              child: Image.asset(
+                                filteredDonationDrives[index].imageUrl,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        // text in the card
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(filteredDonationDrives[index].name,
+                          // text in the card
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(filteredDonationDrives[index].name,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 18)),
+                                Text(filteredDonationDrives[index].category,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500)),
+                                Text(filteredDonationDrives[index].place),
+                                Text(filteredDonationDrives[index].description),
+                              ],
+                            ),
+                          ),
+                          // donate now button
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: const Color(0xFF2F4852),
+                                backgroundColor: Colors.white,
+                                minimumSize: const Size(double.infinity, 50),
+                              ),
+                              child: const Text('Donate Now',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 18)),
-                              Text(filteredDonationDrives[index].category,
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w500)),
-                              Text(filteredDonationDrives[index].place),
-                              Text(filteredDonationDrives[index].description),
-                            ],
-                          ),
-                        ),
-                        // donate now button
-                        Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Color(0xFF2F4852),
-                              backgroundColor: Colors.white,
-                              minimumSize: Size(double.infinity, 50),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              onPressed: () {},
                             ),
-                            child: Text('Donate Now',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            onPressed: () {
-                              print(
-                                  'Donate to ${filteredDonationDrives[index].name}');
-                            },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -237,12 +232,16 @@ class _DonationDriveHomePageState extends State<DonationDriveHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // go to create donation drive
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (BuildContext context) {
+            return DonationDriveForm();
+          }));
         },
-        child: Icon(
+        backgroundColor: const Color(0xFF2F4852),
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
-        backgroundColor: Color(0xFF2F4852),
       ),
     );
   }

@@ -5,23 +5,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Elbi Donation System',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DashboardScreen(),
-    );
-  }
-}
+import 'package:my_app/organization/donation_drives.dart';
+import 'package:my_app/organization/donation_dropoff.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -126,15 +111,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF87CEEB), // Sky blue color
+              ),
+              child: Text(
+                'Elbi\nDonation\nSystem',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListTile(
+              title: const Text('Donation Drives'),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return DonationDriveHomePage();
+                }));
+              },
+            ),
+            ListTile(
+              title: const Text('Profile'),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Welcome!',
           style:
               TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2F4852)),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             // summary card
@@ -149,23 +166,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        color: Color(0xFF2F4852))),
+                        color: const Color(0xFF2F4852))),
                 subtitle: Text("10",
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.bold,
                         fontSize: 40,
-                        color: Color(0xFF2F4852))),
+                        color: const Color(0xFF2F4852))),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // search bar
             Padding(
-              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
               child: Column(
                 children: [
                   TextField(
                     controller: searchController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Search Donation',
                       suffixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
@@ -178,7 +195,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Expanded(
                         child: DropdownButton<String>(
                           value: selectedStatus,
-                          hint: Text("Select Status"),
+                          hint: const Text("Select Status"),
                           isExpanded: true,
                           items: [
                             'Pending',
@@ -202,7 +219,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       // button to clear filter
                       IconButton(
-                        icon: Icon(Icons.clear),
+                        icon: const Icon(Icons.clear),
                         onPressed: () {
                           setState(() {
                             selectedStatus = null;
@@ -214,7 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Expanded(
                         child: DropdownButton<String>(
                           value: selectedCategory,
-                          hint: Text("Select Category"),
+                          hint: const Text("Select Category"),
                           isExpanded: true,
                           items: [
                             'Food',
@@ -238,7 +255,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       // clear filter
                       IconButton(
-                        icon: Icon(Icons.clear),
+                        icon: const Icon(Icons.clear),
                         onPressed: () {
                           setState(() {
                             selectedCategory = null;
@@ -265,11 +282,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           // print('QR Scanner Pressed');
           // open qr code scanner to scan qr code generated by donor
         },
-        child: Icon(
+        backgroundColor: const Color(0xFF2F4852),
+        child: const Icon(
           Icons.qr_code_scanner,
           color: Colors.white,
         ), // Icon for QR code scanner
-        backgroundColor: Color(0xFF2F4852),
       ),
     );
   }
@@ -303,11 +320,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: Color(0xFF2F4852))),
+                        color: const Color(0xFF2F4852))),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Color(0xFF517C8D),
+                    color: const Color(0xFF517C8D),
                     borderRadius: BorderRadius.circular(7),
                   ),
                   child: Text(
@@ -328,16 +346,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     style: GoogleFonts.poppins(
                         // fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: Color(0xFF2F4852))),
+                        color: const Color(0xFF2F4852))),
                 Text(filteredDonations[index].category,
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
-                        color: Color(0xFF2F4852)))
+                        color: const Color(0xFF2F4852)))
               ],
             ),
             onTap: () {
               // will go to Donations page to view full info of donation
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return DonationScreen();
+              }));
             },
           ),
         );
