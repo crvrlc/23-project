@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/admin/approve_signup.dart';
+import 'package:my_app/admin/viewAllDonors_Leila.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class AdminDashboardScreen extends StatelessWidget {
+  const AdminDashboardScreen({super.key});
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Elbi Donation System',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: DashboardScreen(),
-    );
-  }
-}
-
-class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Homepage',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -34,7 +21,7 @@ class DashboardScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            Text(
+            const Text(
               "Welcome, Admin!",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -42,48 +29,45 @@ class DashboardScreen extends StatelessWidget {
                 fontSize: 30,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // card 1
             SizedBox(
               height: 140.0,
-              child: DashboardCard(
+              child: AdminDashboardCard(
                 title: 'View All Organizations\nand Donations',
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => ViewAllOrganizationsScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DonorListPage()),
+                  );
                 },
               ),
             ),
-            SizedBox(height: 16.0), // space between
+            const SizedBox(height: 16.0), // space between
             // card 2
             SizedBox(
               height: 140.0,
-              child: DashboardCard(
+              child: AdminDashboardCard(
                 title: 'Approve Organizations',
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => ApproveOrganizationsScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignUpLogs()),
+                  );
                 },
               ),
             ),
-            SizedBox(height: 16.0), // space between
+            const SizedBox(height: 16.0), // space between
             // card 3
             SizedBox(
               height: 140.0,
-              child: DashboardCard(
+              child: AdminDashboardCard(
                 title: 'View All Donors',
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => ViewAllDonorsScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DonorListPage()),
+                  );
                 },
               ),
             ),
@@ -95,38 +79,42 @@ class DashboardScreen extends StatelessWidget {
 }
 
 // UI of cards
-class DashboardCard extends StatelessWidget {
+class AdminDashboardCard extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const DashboardCard({required this.title, required this.onTap});
+  const AdminDashboardCard(
+      {super.key, required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        color: Color(0xFF87CEEB),
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: Container(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ],
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Card(
+          color: const Color(0xFF87CEEB),
+          elevation: 4.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Container(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

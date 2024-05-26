@@ -20,54 +20,59 @@ class DonorListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFF87CEEB), // Sky blue color
-              ),
-              child: Text(
-                'Elbi\nDonation\nSystem',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            ListTile(
-              title: const Text('View Orgs and Donations'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Approve Sign-Up'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('View All Donors'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: [
+      //       DrawerHeader(
+      //         decoration: BoxDecoration(
+      //           color: Color(0xFF87CEEB), // Sky blue color
+      //         ),
+      //         child: Text(
+      //           'Elbi\nDonation\nSystem',
+      //           style: TextStyle(
+      //               color: Colors.white,
+      //               fontSize: 30.0,
+      //               fontWeight: FontWeight.bold),
+      //         ),
+      //       ),
+      //       ListTile(
+      //         title: const Text('View Orgs and Donations'),
+      //         onTap: () {},
+      //       ),
+      //       ListTile(
+      //         title: const Text('Approve Sign-Up'),
+      //         onTap: () {},
+      //       ),
+      //       ListTile(
+      //         title: const Text('View All Donors'),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       appBar: AppBar(
-        title: Text(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back)),
+        title: const Text(
           'Donor List',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
           IconButton(
-            icon: CircleAvatar(
+            icon: const CircleAvatar(
               backgroundImage: AssetImage("assets/admin-icon.png"),
               backgroundColor: Color(0xFF87CEEB),
             ),
             onPressed: () {
               // print('Profile button pressed');
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text('Admin Profile'),
                   duration: Duration(seconds: 1),
                 ),
@@ -80,27 +85,27 @@ class DonorListPage extends StatelessWidget {
         itemCount: donors.length,
         itemBuilder: (context, index) {
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 18.0),
+            margin: const EdgeInsets.symmetric(horizontal: 18.0),
             decoration: BoxDecoration(
-              color: Color(0xFF87CEEB),
+              color: const Color(0xFF87CEEB),
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(donors[index].imageUrl),
                 ),
                 title: Text(
                   donors[index].name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Info for ' + donors[index].name),
-                      duration: Duration(seconds: 1),
+                      content: Text('Info for ${donors[index].name}'),
+                      duration: const Duration(seconds: 1),
                     ),
                   );
                 },
@@ -109,7 +114,7 @@ class DonorListPage extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) =>
-            SizedBox(height: 12.0), // spacing between tiles
+            const SizedBox(height: 12.0), // spacing between tiles
       ),
     );
   }
